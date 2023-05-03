@@ -5,11 +5,15 @@ const dbConnect = require("./db/dbConnect");
 const User = require("./db/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cors = require("cors")
 const auth = require("./auth");
 
 // body parser configuration
 app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors())
+
+
 
 app.get("/", (request, response, next) => {
   response.json({ message: "Respuesta del servidor!" });
