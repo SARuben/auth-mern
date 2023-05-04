@@ -55,9 +55,10 @@ app.post('/login',(req,res) => {
         "RANDOM-TOKEN",
         { expiresIn:"24h"}
         );
-        res.status(200).send(
+        res.status(200).json(
           {
           message: "comparacion finalizada exitosamente",
+          username: user.username,
           email: user.email,
           token: token
         });
@@ -74,12 +75,12 @@ app.post('/login',(req,res) => {
 
 // free endpoint
 app.get("/free-endpoint", (request, response) => {
-  response.json({ message: "You are free to access me anytime" });
+  response.status(200).json({ message: "Acceso Libre en todo momento" });
 });
 
 // authentication endpoint
 app.get("/auth-endpoint", auth, (request, response) => {
-  response.json({ message: "You are authorized to access me" });
+  response.status(200).json({ message: "Estas autorizado a acceder a esta url" });
 });
 
 
