@@ -9,9 +9,11 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [register, setRegister] = useState(false)
+  const [envio, setEnvio] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setEnvio(true)
     // set configurations
     const configuration = {
       method: "post",
@@ -28,7 +30,10 @@ function Register() {
   };
   
   return (
-    <Container className="form">
+    <Container className="form-container">
+      <div>
+        {register && (<Navigate to="/" />)}
+      </div>
       <h2 className="text-center">Registro</h2>
       <Form onSubmit={(e) => handleSubmit(e)}>
         {/* username */}
@@ -81,8 +86,12 @@ function Register() {
       </Form>
       {/*mensaje de resultado de axios */}
       {register 
-      ? (<p className='text-success'>Se registro exitosamente</p>)
-      : (<p className='text-danger'>Ocurrio algun error durante el registro</p>)
+      ? (<p className='text-success text-center'>Se registro exitosamente</p>)
+      : (envio
+        ? (<p className='text-danger text-center'>Ocurrio algun error durante el registro</p>)
+        :
+        (<p className='text-dark text-center'>Presiona Enviar para Registrarse</p>)  
+        )     
       }      
     </Container>
   );

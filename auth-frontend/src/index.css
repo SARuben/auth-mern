@@ -1,8 +1,15 @@
+html {
+  margin: 0 auto;
+  padding:  0;
+  box-sizing: border-box;
+}
+
 #navigation {
   margin-top: 5%;
   margin-bottom: 5%;
 }
-#navigation .navlink {
+
+#navigation .navlink, #logout-btn{
  margin-left: 2rem;
  padding: 0.5rem;
 }
@@ -12,6 +19,14 @@
   display: flex;
   justify-content: space-between;
 } 
+.navlink, #logout-btn {
+  color: white;
+} 
+
+.navlink:hover , #logout-btn:hover{
+  background-color: red;
+  color: white;
+}
 
 #navbrand {
   margin: 0 auto;
@@ -21,17 +36,24 @@
   display: flex;
   justify-content: center;
 }
-.form {
+.form-container {
   max-width: 100%;
   width: 40%;
   margin: 40px auto;
-  border: inset 1px  #737779;
+  border: 0.2px outset #E0E0E0;
   border-radius: 5px;
   box-shadow: 10px 5px 5px #bdbdbd;
+  background-color: #B2DFDB;
 }
 .navegacion-login {
   display: flex;
   justify-content: center;
   gap: 10px;
 
+}
+.usu-conectado {
+  color: #f1be32;
+}
+.spin-de-espera {
+  margin: 0 auto;
 }

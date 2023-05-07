@@ -29,8 +29,8 @@ export default function FreeComponent() {
   return (
     <div>
       <h1 className="text-center">Free Component</h1> 
-      { loading && <Spinner />}
       <h3 className="text-center text-danger">{message}</h3>
+      <Spinner />
     </div>
   );
 }

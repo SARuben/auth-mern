@@ -1,19 +1,20 @@
 import React from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
+import SpinnerBasico from "./SpinnerCircular";
 
-
-function Login({registrarUsu}) {
-  const [username, setUsername] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+function Login({ registrarUsu }) {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState(" ");
+  const [envio, setEnvio] = useState(false);
   const [login, setLogin] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setEnvio(true);
     // set configurations
     const configuration = {
       method: "POST",
@@ -21,7 +22,7 @@ function Login({registrarUsu}) {
       data: {
         username,
         email,
-        password,
+        password
       },
     };
     axios(configuration)
@@ -31,24 +32,23 @@ function Login({registrarUsu}) {
           username: result.data.username,
           email: result.data.email,
           token: result.data.token
-        }
-        console.log(resUser)
-        registrarUsu(resUser)       
-        // window.location.href = '/'
+        };
+        registrarUsu(resUser);
       })
       .catch((error) => new Error());
   };
-
   return (
-    <Container className= "form">
+    <Container className="form-container">
+       <div>{login && <Navigate to="/" />}</div> 
+
       <h2 className="text-center">Login</h2>
-      <Form  onSubmit={(e) => handleSubmit(e)}>
+      <Form onSubmit={(e) => handleSubmit(e)}>
         {/* username */}
         <Form.Group className="mb-3" controlId="formBasicUserName">
           <Form.Label>Usuario</Form.Label>
           <Form.Control
             type="string"
-            placeholder="Ingresar nombre de usuario"
+            placeholder="Nombre de usuario"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -58,7 +58,7 @@ function Login({registrarUsu}) {
           <Form.Label>Correo electronico</Form.Label>
           <Form.Control
             type="string"
-            placeholder="Ingrese email"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -73,7 +73,6 @@ function Login({registrarUsu}) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-           
         </Form.Group>
 
         {/* submit button */}
@@ -85,18 +84,27 @@ function Login({registrarUsu}) {
         >
           Enviar
         </Button>
+        <div className="spin-de-espera">{envio && <SpinnerBasico />}</div>
         <section className="navegacion-login">
-        <Link className="btn btn-success" to="/">Inicio</Link>
-        <Link className="btn btn-success" to="/register">Registrar</Link>
-
+          <Link className="btn btn-success" to="/">
+            Inicio
+          </Link>
+          <Link className="btn btn-success" to="/register">
+            Registrar
+          </Link>
         </section>
       </Form>
 
       {/* display success message */}
       {login ? (
-        <p className="text-success text-center">Se inicio sesion exitosamente</p>
-      ) : (
-        <p className="text-danger text-center">No se pudo inicir sesion</p>
+        <p className="text-success text-center">
+          Se inicio sesion exitosamente
+        </p>
+      ) :
+       ( envio ?
+        (<p className="text-danger text-center">No se pudo inicirr sesion</p>)
+        :
+        (<p className="text-dark text-center">Enviar para Iniciar sesion</p>)
       )}
     </Container>
   );

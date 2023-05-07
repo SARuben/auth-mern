@@ -79,8 +79,8 @@ app.get("/free-endpoint", (request, response) => {
 });
 
 // authentication endpoint
-app.get("/auth-endpoint", auth, (request, response) => {
-  response.status(200).json({ message: "Estas autorizado a acceder a esta url" });
+app.get("/auth-endpoint",auth,(req, res) => {
+  res.status(200).json({ message: "Estas autorizado a acceder a esta url" });
 });
 
 
