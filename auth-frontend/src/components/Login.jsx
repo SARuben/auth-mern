@@ -21,9 +21,8 @@ function Login({ registrarUsu }) {
   const [facebookId, setFacebookId] = useState("");
 
   function handleCallBackResponse(response) {
-    console.log("response JWT encoded " + response.credential);
     const userObject = jwtdecode(response.credential);
-    console.log(userObject);
+    
   }
   useEffect(() => {
     servicios.forEach((element) => {
@@ -34,8 +33,7 @@ function Login({ registrarUsu }) {
       }
     });
   }, []);
-  console.log(googleId);
-  console.log(facebookId);
+  
   if (googleId) {
     google.accounts.id.initialize({
       client_id: googleId,
@@ -154,13 +152,13 @@ function Login({ registrarUsu }) {
               borderRadius: "4px",
             }}
             onSuccess={(response) => {
-              console.log("Login Success!", response);
+              console.log("Login Success!");
             }}
             onFail={(error) => {
               console.log("Login Failed!", error);
             }}
             onProfileSuccess={(response) => {
-              console.log("Get Profile Success!", response);
+              console.log("Get Profile Success!");
             }}
           />
         )}
