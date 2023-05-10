@@ -7,46 +7,49 @@ import SpinnerBasico from "./SpinnerCircular";
 import Cookies from "universal-cookie";
 import FacebookLogin from "@greatsumini/react-facebook-login";
 import jwtdecode from "jwt-decode";
-import servicios from "../../conexiones";
 const cookies = new Cookies();
 
+
 function Login({ registrarUsu }) {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState(" ");
+  const [password, setPassword] = useState("");
   const [metodoLogin, setMetodoLogin] = useState("local");
   const [envio, setEnvio] = useState(false);
   const [login, setLogin] = useState(false);
-  const [googleId, setGoogleId] = useState("");
-  const [facebookId, setFacebookId] = useState("");
+  const [fbusername, setFbusername] = useState('')
+  const [fbemail, setFbemail] = useState('')
+  const [fbtoken, setFbtoken] = useState('')
+
+  const handleLogin = (name,mail,token) => {
+    const usuLogin = {
+      username: name,
+      email: mail,
+      token: token
+    }
+    registrarUsu(usuLogin)
+    cookies.set("TOKEN", fbtoken, {
+        path: "/"
+    });
+  }
 
   function handleCallBackResponse(response) {
-    const userObject = jwtdecode(response.credential);
-    
+    const userObject = jwtdecode(response.credential); //token
+    setLogin(true);
+    handleLogin(userObject.given_name,userObject.email,response.credential)
   }
   useEffect(() => {
-    servicios.forEach((element) => {
-      if (element.servicio === "GOOGLE_ID") {
-        setGoogleId(element.client_id);
-      } else if (element.servicio === "FACEBOOK_ID") {
-        setFacebookId(element.client_id);
-      }
-    });
+    if (import.meta.env.VITE_GOOGLE_CLIENT_ID) {
+      google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: handleCallBackResponse
+      });
+      google.accounts.id.renderButton(document.getElementById("g_id_onload"), {
+        theme: "outline",       
+        size: "large"
+      });
+    }  
   }, []);
   
-  if (googleId) {
-    google.accounts.id.initialize({
-      client_id: googleId,
-      callback: handleCallBackResponse,
-    });
-    google.accounts.id.renderButton(document.getElementById("g_id_onload"), {
-      theme: "outline",
-      type: "standard",
-      size: "large",
-      shape: "rectangular",
-    });
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setEnvio(true);
@@ -55,10 +58,9 @@ function Login({ registrarUsu }) {
       method: "POST",
       url: "https://auth-mern-backend.onrender.com/login",
       data: {
-        username,
         email,
         password,
-        metodoLogin,
+        metodoLogin
       },
     };
     axios(configuration)
@@ -67,32 +69,26 @@ function Login({ registrarUsu }) {
         const resUser = {
           username: result.data.username,
           email: result.data.email,
-          token: result.data.token,
+          token: result.data.token
         };
         registrarUsu(resUser);
         cookies.set("TOKEN", result.data.token, {
-          path: "/",
+          path: "/"
         });
       })
       .catch((error) => new Error());
   };
 
+  console.log(fbusername)
+  if (metodoLogin == 'facebook' && fbusername && fbemail && fbtoken) {
+    handleLogin(fbusername,fbemail,fbtoken)
+  }
   return (
-    <Container className="form-container">
+    <Container className="form-container">     
       <div>{login && <Navigate to="/" />}</div>
-
+      
       <h2 className="text-center">Login</h2>
       <Form onSubmit={(e) => handleSubmit(e)}>
-        {/* username */}
-        <Form.Group className="mb-3" controlId="formBasicUserName">
-          <Form.Label>Usuario</Form.Label>
-          <Form.Control
-            type="string"
-            placeholder="Nombre de usuario"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </Form.Group>
         {/* email */}
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Correo electronico</Form.Label>
@@ -139,10 +135,9 @@ function Login({ registrarUsu }) {
         <div id="g_id_onload"></div>
         <br />
         {/*Facebook login*/}
-        {facebookId && (
+        { import.meta.env.VITE_FACEBOOK_CLIENT_ID && (
           <FacebookLogin
-            
-            appId={facebookId}
+            appId= {import.meta.env.VITE_FACEBOOK_CLIENT_ID}
             style={{
               backgroundColor: "#4267b2",
               color: "#fff",
@@ -151,14 +146,17 @@ function Login({ registrarUsu }) {
               border: "none",
               borderRadius: "4px",
             }}
+          
             onSuccess={(response) => {
-              console.log("Login Success!");
+              setFbtoken(response)
             }}
             onFail={(error) => {
               console.log("Login Failed!", error);
             }}
             onProfileSuccess={(response) => {
-              console.log("Get Profile Success!");
+              setMetodoLogin('facebook')
+              setFbemail(response.email)
+              setFbusername(response.name)
             }}
           />
         )}

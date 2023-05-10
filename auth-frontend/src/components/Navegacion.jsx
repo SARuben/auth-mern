@@ -1,22 +1,19 @@
 import React from "react";
 import { Container, Col, Row, Button } from "react-bootstrap";
-import { ArrowRight,BoxArrowInRight,BoxArrowRight } from "react-bootstrap-icons";
+import { BoxArrowInRight,BoxArrowRight } from "react-bootstrap-icons";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { NavLink, Link } from "react-router-dom";
-
+import { NavLink} from "react-router-dom";
 
 function Navegacion( {user, logout}) {
   return (
     
       <Navbar className="navbar" expand="lg" bg="dark" variant="dark">
-          <Navbar.Brand id="navbrand" href="/">Autenticacion React <span >
-            <h4 className="usu-conectado">{user ?`Hola ${user}`: 'Bienvenid@'}</h4></span>
+          <Navbar.Brand id="navbrand" href="/">Autenticacion React
           </Navbar.Brand>
+          <h4 className="usu-conectado">{user ?`Hola ${user}`: 'Bienvenid@'}</h4>
           <Nav className="me-auto">
-          <section id="navigation">
-            
-            
+          <section id="navigation">   
             {user
               ? <Button variant = "dark" id="logout-btn" onClick={(e) => logout()}>
                 Cerrar Sesion <span> <BoxArrowRight /> </span>

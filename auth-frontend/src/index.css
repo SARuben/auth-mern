@@ -5,12 +5,12 @@ html {
 }
 
 #navigation {
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 #navigation .navlink, #logout-btn{
- margin-left: 2rem;
+ margin-left: 1rem;
  padding: 0.5rem;
 }
 
