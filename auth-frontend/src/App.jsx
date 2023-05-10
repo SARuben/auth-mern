@@ -48,12 +48,5 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
-}
-// id Cliente auth2 
-// 844724455624-qsb94cmbiijkkdv42aivem9e412b7fbl.apps.googleusercontent.com
-// secret key
-//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
-
-// github client id: 
-// secret key 
+} 
 export default App;

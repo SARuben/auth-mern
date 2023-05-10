@@ -5,7 +5,6 @@ import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import SpinnerBasico from "./SpinnerCircular";
 import Cookies from "universal-cookie";
-import { GoogleLogin } from "google-login-react";
 import FacebookLogin from "@greatsumini/react-facebook-login";
 import jwtdecode from "jwt-decode";
 import servicios from "../../conexiones";
@@ -144,7 +143,7 @@ function Login({ registrarUsu }) {
         {/*Facebook login*/}
         {facebookId && (
           <FacebookLogin
-            // appId="760206879028611"
+            
             appId={facebookId}
             style={{
               backgroundColor: "#4267b2",

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Button, Form, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 
 function Register() {
