@@ -1,8 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
-export const RutaProtegida = ({ user, children,redirectoTo="/" }) => {
-  if (!user) {
-    return <Navigate to= {redirectoTo} />
+export const RutaProtegida = ({ isAllowed, children, redirectTo="/login"}) => {
+  if (!isAllowed) {
+    console.log(isAllowed)
+    return <Navigate to= {redirectTo} />
   }
     return children ? children : <Outlet/>
 }

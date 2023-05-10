@@ -13,7 +13,10 @@ const UserSchema = new Schema({
     type: String,
     required: [true, 'Por favor ingrese una contraseña'],
     unique: false
-
+  },
+  modoLogin: {
+    type: String,
+    default: 'local'
   }
 });
 module.exports = model ('User',UserSchema); 

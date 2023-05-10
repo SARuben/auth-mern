@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, redirect } from "react-router-dom";
+import { Route, Navigate} from "react-router-dom";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -19,7 +19,7 @@ export default function ProtectedRoutes({ component: Component, ...rest }) {
         } else {
           // returns the user to the landing page if there is no valid token set
           return (
-            <redirect
+            <Navigate 
               to={{
                 pathname: "/",
                 state: {
