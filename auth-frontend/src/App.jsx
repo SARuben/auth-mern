@@ -2,51 +2,58 @@ import React, { useState } from "react";
 import {
   Route,
   Routes,
-  Link,
-  NavLink,
   BrowserRouter,
-  Navigate,
 } from "react-router-dom";
 import "./App.css";
-import FreeComponent from "./components/FreeComponent";
-import AuthComponent from "./components/AuthComponent";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Navegacion from "./components/Navegacion";
-import { RutaProtegida } from "./components/RutaProtegida";
+import Mailer from "./components/Mailer";
+import BasicToast from "./components/Toast";
+
 const usuInicio = {
   username: "",
   email: "",
   token: "",
 };
 
+
 function App() {
   const [user, setUser] = useState(usuInicio);
+  const [mostrarToast, setmostrarToast] = useState(false)
+  const [tituloToast, settituloToast]   = useState('')
+  const [mensajeToast, setmensajeToast] = useState('')
 
   function registrarUsu(usu) {
     setUser(usu);
-    console.log(usu);
   }
 
   const logout = (e) => {
     setUser(usuInicio);
   };
 
+  const setestadoToast = (estado,titulo,mensaje) => {
+    setmostrarToast(estado)
+    setmensajeToast(mensaje)
+    settituloToast(titulo)
+  }
+  const resetToast = () => {
+    setmostrarToast(false)
+    setmensajeToast('')
+    settituloToast('')
+  }
+
   return (
     <BrowserRouter>
       <Navegacion user={user.username} logout={logout} />
+      { mostrarToast && < BasicToast titulo={tituloToast} mensaje={mensajeToast}/>
+      }
       <Routes>
         <Route path="/login" element={<Login registrarUsu={registrarUsu} />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/free" element={<FreeComponent /> } />
-        <Route path="/auth" element={
-          <RutaProtegida isAllowed={!!user.username} redirectTo={"/login"}>
-            <AuthComponent />    
-          </RutaProtegida>
-      } />
-     
+        <Route path="/mail" element={<Mailer setestadoToast = {setestadoToast}/>} />
       </Routes>
     </BrowserRouter>
   );
-} 
+};
 export default App;

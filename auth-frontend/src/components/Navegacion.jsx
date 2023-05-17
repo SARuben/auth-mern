@@ -25,8 +25,7 @@ function Navegacion( {user, logout}) {
                 </NavLink>
             }  
             <NavLink className="navlink btn" to="/register">Registro</NavLink>
-            <NavLink className="navlink btn"  to="/free">Free</NavLink>
-            <NavLink className="navlink btn"  to="/auth">Protegida</NavLink>
+            <NavLink className="navlink btn"  to="/mail">Mail</NavLink>
             </section>
           </Nav>
       </Navbar>

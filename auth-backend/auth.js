@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken"); 
+
 // verifica que el token sea correcto y continua. es un middleware
 module.exports = async (req, res, next) => {
   try {
@@ -6,7 +7,7 @@ module.exports = async (req, res, next) => {
     const token = await req.headers.authorization.split(" ")[1]; 
   
     // comparar los tokens
-    const decodedToken = await jwt.verify(token,"RANDOM-TOKEN");
+    const decodedToken = await jwt.verify(token,process.env.SECRET_KEY);
     // capturar los detalles del usuario 
     const user = decodedToken  
     //pasar el usuario

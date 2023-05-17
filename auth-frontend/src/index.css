@@ -3,6 +3,14 @@ html {
   padding:  0;
   box-sizing: border-box;
 }
+.banner {
+  background-image: url("./assets/img/diseno-interiores-marcos-fotos-bonitas-sillas.jpg");
+  padding: 30rem;
+  background-position: top;
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+}
 
 #navigation {
   margin-top: 2%;
@@ -51,9 +59,54 @@ html {
   gap: 10px;
 
 }
+#botones {
+  display: flex;
+  gap: 2px;
+  justify-content: space-between;
+  width: 100%
+}
+
+#loginbutns {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  justify-content: space-between;
+  
+}
+#login-facebook-btn {
+    background-color: #4267b2;
+    width: 100%;
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+}
+
+#login_google_btn {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-size: 16px;
+  padding: 5px 15px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  background-color: #fff;
+}
+
 .usu-conectado {
   color: #f1be32;
 }
 .spin-de-espera {
   margin: 0 auto;
+}
+.gbtn {
+  width: 100%;
+}
+#form-contacto {
+  margin: 50px auto;
+  
+
 }

@@ -17,7 +17,7 @@ function Register() {
     // set configurations
     const configuration = {
       method: "post",
-      url: "https://auth-mern-backend.onrender.com/register",
+      url: import.meta.env.VITE_SERVER_BACKEND ,
       data: {
         username,
         email,
